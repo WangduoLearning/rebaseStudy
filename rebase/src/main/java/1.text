@@ -1,0 +1,55 @@
+CREATE TABLE `tb_activity_v2` (
+	`store_id` VARCHAR ( 64 ) NOT NULL COMMENT '店铺sid',
+	`activity_id` VARCHAR ( 64 ) NOT NULL COMMENT '活动id',
+	`activity_name` VARCHAR ( 64 ) NOT NULL COMMENT '活动名称',
+	`activity_types` TINYINT NOT NULL COMMENT '活动类型',
+	`activity_url` TEXT COMMENT '活动url',
+	`status` TINYINT NOT NULL DEFAULT 1 COMMENT '标记活动是否开启，0-关闭；1-开启',
+	`activity_alias` TEXT COMMENT '活动别名',
+	`zhubo_names` VARCHAR ( 512 ) COMMENT '主播限定名称',
+	`advance_day` INT COMMENT '预热提前天数',
+	`advance_time` DATETIME COMMENT '预热时间',
+	`create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	`update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+	PRIMARY KEY ( `activity_id` ),
+	INDEX ( store_id, activity_name)
+) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '优惠活动基本信息表';
+
+CREATE TABLE `tb_activity_rule` (
+	`activity_id` VARCHAR ( 64 ) NOT NULL COMMENT '活动id',
+	`store_id` VARCHAR ( 64 ) NOT NULL COMMENT '店铺sid',
+	`rule_id` VARCHAR ( 64 ) NOT NULL COMMENT '规则id',
+	`rule_type` TINYINT NOT NULL DEFAULT 0 COMMENT '规则类型,0-不预热;1-预热;',
+	`activity_types` TINYINT NOT NULL COMMENT '活动类型',
+	`status` TINYINT NOT NULL DEFAULT 1 COMMENT '标记活动是否开启，0-关闭；1-开启',
+	`template_id` VARCHAR ( 64 ) COMMENT 'bible话术模板id',
+	`start_time_in_ms` BIGINT COMMENT '活动开始时间',
+	`end_time_in_ms` BIGINT COMMENT '活动结束时间',
+	`create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	`update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+	PRIMARY KEY ( `rule_id` ),
+	INDEX (store_id, activity_types),
+	INDEX ( activity_id )
+) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '优惠活动规则信息表';
+
+
+CREATE TABLE `tb_activity_item` (
+	`id` INT NOT NULL AUTO_INCREMENT COMMENT '自增id',
+	`activity_id` VARCHAR ( 64 ) NOT NULL COMMENT '活动id',
+	`store_id` VARCHAR ( 64 ) NOT NULL COMMENT '店铺sid',
+	`spu_id` VARCHAR ( 64 ) NOT NULL COMMENT '商品id',
+	`rule_id` VARCHAR ( 64 ) NOT NULL COMMENT '规则id',
+	`create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	`update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+	PRIMARY KEY ( `id` ),
+	INDEX (activity_id, spu_id),
+	INDEX (rule_id)
+) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COMMENT = '规则商品表';
+
+
+alter table tb_activity_refactor rename to tb_activity_v2;
+alter table tb_activity_spu rename to tb_activity_item;
+
+
+ALTER TABLE tb_activity_rule DROP create_time_in_ms;
+ALTER TABLE tb_activity_rule ADD rule_sequence int DEFAULT 0;
