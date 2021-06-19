@@ -6,9 +6,9 @@
  */
 public class test {
 
-  private String activityId;
+  private String msg;
 
-  private Integer advanceDay;
+  private Integer code;
 
   private Long advanceTime;
 }

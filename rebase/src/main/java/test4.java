@@ -11,9 +11,9 @@ public class test4 {
 
   private String activityId;
 
-  private String spuId;
+  private String msg;
 
-  private String ruleId;
+  private Integer code;
 
   private String activityUrl;
 
