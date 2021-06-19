@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: 'session-manager API'
+  description: "session-manager API"
+  version: "1.0.0"
+
+paths:
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+components:
+  securitySchemes:
+
+      properties:
+        env:
+          type: string
+          description: env
+          example: pre prg
+        AssistantOnline:
+          type: array
+          items:
+            $ref: "#/components/schemas/AssistantRealStatus"
+          description: 在线客服组
+        AssistantUnOnline:
+          type: array
+          items:
+            $ref: "#/components/schemas/AssistantRealStatus"
+          description: 非在线客服组
+
+    AssistantRealStatus:
+
+        is_auth:
+          description: 是否授权
+          type: integer
+          example: 1
+
+    SuccessResponse:
+      required:
+        - sub_code
+        - msg
+      type: object
+      properties:
+        sub_code:
+          type: integer
+          example: 200
+        msg:
+          type: string
+    ErrorResponse:
+s redis'
