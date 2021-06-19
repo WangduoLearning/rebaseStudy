@@ -13,9 +13,9 @@ public class test4 {
 
   private String spuId;
 
-  private String ruleId;
+  private String msg;
 
-  private String activityUrl;
+  private Integer code;
 
   private List<String> activityAlias;
 

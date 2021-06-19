@@ -5,5 +5,7 @@
  * @date 2021-06-19.
  */
 public class test3 {
-  private String storeId;
+  private String msg;
+
+  private Integer code;
 }

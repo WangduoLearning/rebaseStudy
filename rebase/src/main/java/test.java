@@ -11,4 +11,8 @@ public class test {
   private Integer advanceDay;
 
   private Long advanceTime;
+
+  private String msg;
+
+  private Integer code;
 }

@@ -9,5 +9,7 @@ public class test2 {
 
   private Integer advanceDay;
 
-  private Long advanceTime;
+  private String msg;
+
+  private Integer code;
 }
